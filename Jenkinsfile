@@ -23,7 +23,7 @@ pipeline {
         }
         stage('Long-running Verification') {
             environment {
-                SONAR_LOGIN = credentials('SONARCLOUD_TOKEN')
+                SONAR_LOGIN = credentials('sonar-server')
             }
             parallel {
                 stage('Integration Tests') {
@@ -68,7 +68,7 @@ pipeline {
     }
     post {
         failure {
-            mail to: 'benjamin.muschko@gmail.com', subject: 'Build failed', body: 'Please fix!'
+            mail to: 'gourip092@gmail.com', subject: 'Build failed', body: 'Please fix!'
         }
     }
 }
