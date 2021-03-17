@@ -1,20 +1,11 @@
 pipeline {
     agent any
-
-    triggers {
-        pollSCM('*/5 * * * *')
     }
 
     stages {
         stage('Build') {
             steps {
                 gradlew('clean', 'build')
-            }
-        }
-        stage('Assemble') {
-            steps {
-                gradlew('assemble')
-                stash includes: '**/build/libs/*.war', name: 'app'
             }
         }
         stage('Promotion') {
