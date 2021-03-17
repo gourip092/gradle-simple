@@ -11,11 +11,6 @@ pipeline {
                 gradlew('clean', 'build')
             }
         }
-        stage('Code Analysis') {
-            steps {
-                gradlew('sonar-server')
-            }
-        }
         stage('Assemble') {
             steps {
                 gradlew('assemble')
