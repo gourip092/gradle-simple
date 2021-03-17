@@ -1,15 +1,17 @@
 pipeline {
     agent any
+    tools {
+        gradle 'gradle7'
     }
     stages {
-        stage('Build') {
+        stage('SCM Checkout') {
             steps {
-                gradlew('clean', 'build')
+                git 'https://github.com/gourip092/gradle-simple.git'
             }
         }
-        stage('Deploy to Production') {
+        stage('Build') {
             steps {
-                echo "deploying to prod"
+                sh './gradlew clean build'
             }
         }
     }
