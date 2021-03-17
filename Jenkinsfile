@@ -1,7 +1,6 @@
 pipeline {
     agent any
     }
-
     stages {
         stage('Build') {
             steps {
@@ -16,22 +15,14 @@ pipeline {
             }
         }
         stage('Deploy to Production') {
-            environment {
-                HEROKU_API_KEY = credentials('HEROKU_API_KEY')
-            }
             steps {
-                unstash 'app'
-                gradlew('deployHeroku')
+                echo "deploying to prod"
+            }
+            post {
+                failure {
+                    mail to: 'gourip092@gmail.com', subject: 'Build failed', body: 'Please fix!'
+                }
             }
         }
     }
-    post {
-        failure {
-            mail to: 'gourip092@gmail.com', subject: 'Build failed', body: 'Please fix!'
-        }
-    }
-}
-
-def gradlew(String... args) {
-    sh "./gradlew ${args.join(' ')} -s"
 }
